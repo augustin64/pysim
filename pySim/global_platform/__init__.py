@@ -822,10 +822,9 @@ class ADF_SD(CardADF):
             return self._cmd.lchan.scc.send_apdu_checksw(cmd_hex)
 
         load_parser = argparse.ArgumentParser()
-        load_parser_from_grp = load_parser.add_mutually_exclusive_group(required=True)
-        load_parser_from_grp.add_argument('--from-hex', type=is_hexstr, help='load from hex string')
-        load_parser_from_grp.add_argument('--from-file', type=argparse.FileType('rb', 0), help='load from binary file')
-        load_parser_from_grp.add_argument('--from-cap-file', type=argparse.FileType('rb', 0), help='load from JAVA-card CAP file')
+        load_parser.add_argument('--from-hex', type=is_hexstr, help='load from hex string')
+        load_parser.add_argument('--from-file', type=argparse.FileType('rb', 0), help='load from binary file')
+        load_parser.add_argument('--from-cap-file', type=argparse.FileType('rb', 0), help='load from JAVA-card CAP file')
 
         @cmd2.with_argparser(load_parser)
         def do_load(self, opts):
@@ -862,17 +861,15 @@ class ADF_SD(CardADF):
         install_cap_parser = argparse.ArgumentParser()
         install_cap_parser.add_argument('cap_file', type=str, metavar='FILE',
                                         help='JAVA-CARD CAP file to install')
-        install_cap_parser_inst_prm_g = install_cap_parser.add_mutually_exclusive_group()
-        install_cap_parser_inst_prm_g.add_argument('--install-parameters', type=is_hexstr, default=None,
+        install_cap_parser.add_argument('--install-parameters', type=is_hexstr, default=None,
                                                    help='install Parameters (GPC_SPE_034, section 11.5.2.3.7, table 11-49)')
-        install_cap_parser_inst_prm_g_grp = install_cap_parser_inst_prm_g.add_argument_group()
-        install_cap_parser_inst_prm_g_grp.add_argument('--install-parameters-volatile-memory-quota',
+        install_cap_parser.add_argument('--install-parameters-volatile-memory-quota',
                                                        type=int, default=None,
                                                        help='volatile memory quota (GPC_SPE_034, section 11.5.2.3.7, table 11-49)')
-        install_cap_parser_inst_prm_g_grp.add_argument('--install-parameters-non-volatile-memory-quota',
+        install_cap_parser.add_argument('--install-parameters-non-volatile-memory-quota',
                                                        type=int, default=None,
                                                        help='non volatile memory quota (GPC_SPE_034, section 11.5.2.3.7, table 11-49)')
-        install_cap_parser_inst_prm_g_grp.add_argument('--install-parameters-stk',
+        install_cap_parser.add_argument('--install-parameters-stk',
                                                        type=is_hexstr, default=None,
                                                        help='Load Parameters (ETSI TS 102 226, section 8.2.1.3.2.1)')
 
